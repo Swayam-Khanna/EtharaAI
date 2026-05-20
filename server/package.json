@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "Project Management System Backend API",
   "main": "src/index.js",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
+    "build": "npm install --omit=dev",
     "seed": "node src/utils/seed.js"
   },
   "dependencies": {
