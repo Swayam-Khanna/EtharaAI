@@ -85,7 +85,8 @@ app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
+const HOST = '0.0.0.0';
+const server = app.listen(PORT, HOST, () => {
   console.log(`[Server] Express server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
   console.log(`[Server] Environment: NODE_ENV=${process.env.NODE_ENV || 'development'}`);
 });
