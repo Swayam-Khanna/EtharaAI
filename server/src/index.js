@@ -60,7 +60,11 @@ app.use('/api/tasks', taskRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/users', userRoutes);
 
-// Root Endpoint for checking API health
+// Root Endpoints for checking API health
+app.get('/', (req, res) => {
+  res.status(200).json({ success: true, message: 'API is running' });
+});
+
 app.get('/health', (req, res) => {
   res.status(200).json({
     success: true,
@@ -81,9 +85,8 @@ app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOST || '0.0.0.0';
-const server = app.listen(PORT, HOST, () => {
-  console.log(`[Server] Express server running in ${process.env.NODE_ENV || 'development'} mode on ${HOST}:${PORT}`);
+const server = app.listen(PORT, () => {
+  console.log(`[Server] Express server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
   console.log(`[Server] Environment: NODE_ENV=${process.env.NODE_ENV || 'development'}`);
 });
 
