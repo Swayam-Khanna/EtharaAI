@@ -81,13 +81,27 @@ app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
-  console.log(`[Server] Express server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+const HOST = process.env.HOST || '0.0.0.0';
+const server = app.listen(PORT, HOST, () => {
+  console.log(`[Server] Express server running in ${process.env.NODE_ENV || 'development'} mode on ${HOST}:${PORT}`);
+  console.log(`[Server] Environment: NODE_ENV=${process.env.NODE_ENV || 'development'}`);
+});
+
+// Handle server errors
+server.on('error', (err) => {
+  console.error(`[Server Error] Failed to start server:`, err);
+  process.exit(1);
 });
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
   console.error(`[Server Error] Unhandled Rejection: ${err.message}`);
   // Close server & exit process
+  server.close(() => process.exit(1));
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+  console.error(`[Server Error] Uncaught Exception: ${err.message}`);
   server.close(() => process.exit(1));
 });
